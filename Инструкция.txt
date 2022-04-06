@@ -1,0 +1,40 @@
+1) Заполнение необходимых данных.
+У бота есть системный пароль, на всякий случай, с целью защиты, чтобы никто не мог отправлять веб-хуки кроме вас. А так же, чтобы никто кроме вас не смог сменить данные по типу API-ключей или ваших данных от ТГ. Для того, чтобы изменить данные бота снизу на карточке параметры есть кнопка "Изменить". Если вы в последствии захотите изменить допустим чат id тг, то вводить нужно будет все параметры, а не только chat id.
+Пароль: web_pass123_hook
+2) Когда вы будете настраивать уведомления для своей стратегии на TradingView, то в окне настройки уведомлений нужно будет поставить галочку около "URL веб-хука", и в появившейся строке указать ссылку на вашего бота с припиской "/webhook", примерно так "https://web-bot-test.herokuapp.com/webhook".
+Далее в поле сообщение нужно вставить следующий текст:
+Это те данные, которые TradingView будет передавать боту, самые главные поля здесь - 
+"ticker" - Торговая пара, в которой совершается сделка (например BTCUSDT),
+"close" - Последняя цена,
+"order_action" - Действие покупка/продажа,
+"order_contracts" - Кол-во покупаемой/продаваемой криптовалюты.
+Все эти данные TradingView подставляет автоматически, главное, чтобы они были прописаны в стратегии. 
+{
+	"pass": "web_pass123_hook",
+	"time": "{{timenow}}",
+	"exchange": "{{exchange}}",
+	"ticker": "{{ticker}}",
+	"bar": {
+		"time": "{{time}}",
+		"open": {{open}},
+		"high": {{high}},
+		"low": {{low}},
+		"close": {{close}},
+		"volume": {{volume}}
+	},
+	"strategy": {
+		"position_size": {{strategy.position_size}},
+		"order_action": "{{strategy.order.action}}",
+		"order_contracts": {{strategy.order.contracts}},
+		"order_price": {{strategy.order.price}},
+		"order_id": "{{strategy.order.id}}",
+		"market_position": "{{strategy.market_position}}",
+		"market_position_size": {{strategy.market_position_size}},
+		"prev_market_position": "{{strategy.prev_market_position}}",
+		"prev_market_position_size": {{strategy.prev_market_position_size}}
+	}
+}
+3) Статистика.
+Кол-во сделок - отображает число совершенных сделок (полный цикл: купить-продать),
+соответственно 10 сделок = 20 ордеров.
+Доход, а так же комисии считаются в долларах.
